@@ -39,7 +39,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.entity.ContentType;
+import org.apache.http.backport.entity.ContentType;
 import org.apache.http.protocol.HTTP;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

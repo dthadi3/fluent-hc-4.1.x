@@ -26,7 +26,7 @@
 
 package org.apache.http.client.fluent;
 
-import org.apache.http.entity.ContentType;
+import org.apache.http.backport.entity.ContentType;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

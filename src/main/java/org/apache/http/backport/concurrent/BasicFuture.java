@@ -24,7 +24,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.http.concurrent;
+package org.apache.http.backport.concurrent;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;

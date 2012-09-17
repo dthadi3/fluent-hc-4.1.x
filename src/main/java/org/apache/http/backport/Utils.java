@@ -1,13 +1,12 @@
 package org.apache.http.backport;
 
-import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
+import org.apache.http.backport.entity.ContentType;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;

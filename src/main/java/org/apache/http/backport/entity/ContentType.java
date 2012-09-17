@@ -25,13 +25,13 @@
  *
  */
 
-package org.apache.http.entity;
+package org.apache.http.backport.entity;
 
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Locale;
 
-import org.apache.http.Consts;
+import org.apache.http.backport.Consts;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -131,7 +131,7 @@ public final class ContentType {
     }
 
     /**
-     * Creates a new instance of {@link org.apache.http.entity.ContentType}.
+     * Creates a new instance of {@link ContentType}.
      *
      * @param mimeType MIME type. It may not be <code>null</code> or empty. It may not contain
      *        characters <">, <;>, <,> reserved by the HTTP specification.
@@ -153,7 +153,7 @@ public final class ContentType {
     }
 
     /**
-     * Creates a new instance of {@link org.apache.http.entity.ContentType} without a charset.
+     * Creates a new instance of {@link ContentType} without a charset.
      *
      * @param mimeType MIME type. It may not be <code>null</code> or empty. It may not contain
      *        characters <">, <;>, <,> reserved by the HTTP specification.
@@ -164,7 +164,7 @@ public final class ContentType {
     }
     
     /**
-     * Creates a new instance of {@link org.apache.http.entity.ContentType}.
+     * Creates a new instance of {@link ContentType}.
      *
      * @param mimeType MIME type. It may not be <code>null</code> or empty. It may not contain
      *        characters <">, <;>, <,> reserved by the HTTP specification.

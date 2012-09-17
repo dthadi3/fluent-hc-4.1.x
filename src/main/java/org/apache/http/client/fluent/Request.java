@@ -43,7 +43,7 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
+import org.apache.http.backport.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;

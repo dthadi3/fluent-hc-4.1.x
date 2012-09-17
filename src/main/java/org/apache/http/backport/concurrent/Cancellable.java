@@ -24,22 +24,16 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.http.concurrent;
-
-import java.util.concurrent.Future;
+package org.apache.http.backport.concurrent;
 
 /**
- * A callback interface that gets invoked upon completion of a {@link java.util.concurrent.Future}.
+ * A <tt>Cancellable</tt> represents a process or an operation that can be
+ * canceled.
  *
- * @param <T> the future result type returned by this callback.
  * @since 4.2
  */
-public interface FutureCallback<T> {
+public interface Cancellable {
 
-    void completed(T result);
-
-    void failed(Exception ex);
-
-    void cancelled();
+    boolean cancel();
 
 }

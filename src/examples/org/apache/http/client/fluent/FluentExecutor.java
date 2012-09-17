@@ -30,7 +30,7 @@ import java.io.File;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion;
-import org.apache.http.entity.ContentType;
+import org.apache.http.backport.entity.ContentType;
 
 /**
  * This example demonstrates how the he HttpClient fluent API can be used to execute multiple

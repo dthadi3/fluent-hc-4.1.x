@@ -24,28 +24,22 @@
  * <http://www.apache.org/>.
  *
  */
+package org.apache.http.backport.concurrent;
 
-package org.apache.http;
-
-import java.nio.charset.Charset;
+import java.util.concurrent.Future;
 
 /**
- * Commons constants.
+ * A callback interface that gets invoked upon completion of a {@link java.util.concurrent.Future}.
  *
+ * @param <T> the future result type returned by this callback.
  * @since 4.2
  */
-public final class Consts {
+public interface FutureCallback<T> {
 
-    public static final int CR = 13; // <US-ASCII CR, carriage return (13)>
-    public static final int LF = 10; // <US-ASCII LF, linefeed (10)>
-    public static final int SP = 32; // <US-ASCII SP, space (32)>
-    public static final int HT = 9;  // <US-ASCII HT, horizontal-tab (9)>
+    void completed(T result);
 
-    public static final Charset UTF_8 = Charset.forName("UTF-8");
-    public static final Charset ASCII = Charset.forName("US-ASCII");
-    public static final Charset ISO_8859_1 = Charset.forName("ISO-8859-1");
+    void failed(Exception ex);
 
-    private Consts() {
-    }
+    void cancelled();
 
 }
