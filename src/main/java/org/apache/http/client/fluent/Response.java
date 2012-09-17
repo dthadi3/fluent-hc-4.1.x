@@ -36,9 +36,10 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
+
+import static org.apache.http.backport.Utils.newByteArrayEntity;
 
 public class Response {
 
@@ -91,8 +92,8 @@ public class Response {
         try {
             HttpEntity entity = this.response.getEntity();
             if (entity != null) {
-                this.response.setEntity(new ByteArrayEntity(EntityUtils.toByteArray(entity),
-                                ContentType.getOrDefault(entity)));
+                this.response.setEntity(newByteArrayEntity(EntityUtils.toByteArray(entity),
+                        ContentType.getOrDefault(entity)));
             }
             return this.response;
         } finally {

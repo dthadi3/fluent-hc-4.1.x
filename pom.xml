@@ -30,7 +30,7 @@
   <parent>
     <groupId>org.apache.httpcomponents</groupId>
     <artifactId>httpcomponents-client</artifactId>
-    <version>4.2.1</version>
+    <version>4.1.1</version>
   </parent>
   <artifactId>fluent-hc</artifactId>
   <name>Fluent HttpClient</name>
@@ -54,22 +54,6 @@
       <version>${project.version}</version>
       <scope>test</scope>
       <classifier>tests</classifier>
-    </dependency>
-    <!-- direct dependency on logging -->
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- TODO: does not appear to be needed; remove? -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
     </dependency>
   </dependencies>
 

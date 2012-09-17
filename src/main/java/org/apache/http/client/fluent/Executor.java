@@ -34,7 +34,6 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.ChallengeState;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.NTCredentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -49,18 +48,21 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.scheme.SchemeSocketFactory;
-import org.apache.http.conn.ssl.SSLInitializationException;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.protocol.BasicHttpContext;
+
+import static org.apache.http.backport.Utils.newAuthScope;
+import static org.apache.http.backport.Utils.reset;
 
 public class Executor {
 
-    final static PoolingClientConnectionManager CONNMGR;
+    // 4.1.1 doesn't have the pooling connection manager, so let's use this thread-friendly version available
+    final static ThreadSafeClientConnManager CONNMGR;
     final static DefaultHttpClient CLIENT;
 
     static {
@@ -69,8 +71,9 @@ public class Executor {
         schemeRegistry.register(new Scheme("http", 80, plain));
         SchemeSocketFactory ssl = null;
         try {
-            ssl = SSLSocketFactory.getSystemSocketFactory();
-        } catch (SSLInitializationException ex) {
+            // matching
+            ssl = SSLSocketFactory.getSocketFactory();
+        } catch (IllegalStateException ex) {
             SSLContext sslcontext;
             try {
                 sslcontext = SSLContext.getInstance(SSLSocketFactory.TLS);
@@ -84,7 +87,7 @@ public class Executor {
         if (ssl != null) {
             schemeRegistry.register(new Scheme("https", 443, ssl));
         }
-        CONNMGR = new PoolingClientConnectionManager(schemeRegistry);
+        CONNMGR = new ThreadSafeClientConnManager(schemeRegistry);
         CONNMGR.setDefaultMaxPerRoute(100);
         CONNMGR.setMaxTotal(200);
         CLIENT = new DefaultHttpClient(CONNMGR);
@@ -121,17 +124,19 @@ public class Executor {
     }
 
     public Executor auth(final HttpHost host, final Credentials creds) {
-        AuthScope authScope = host != null ? new AuthScope(host) : AuthScope.ANY;
+        AuthScope authScope = host != null ? newAuthScope(host) : AuthScope.ANY;
         return auth(authScope, creds);
     }
 
     public Executor authPreemptive(final HttpHost host) {
-        this.authCache.put(host, new BasicScheme(ChallengeState.TARGET));
+        //this.authCache.put(host, new BasicScheme(ChallengeState.TARGET));
+        this.authCache.put(host, new BasicScheme());
         return this;
     }
 
     public Executor authPreemptiveProxy(final HttpHost host) {
-        this.authCache.put(host, new BasicScheme(ChallengeState.PROXY));
+        //this.authCache.put(host, new BasicScheme(ChallengeState.PROXY));
+        this.authCache.put(host, new BasicScheme());
         return this;
     }
 
@@ -184,7 +189,7 @@ public class Executor {
         this.localContext.setAttribute(ClientContext.AUTH_CACHE, this.authCache);
         this.localContext.setAttribute(ClientContext.COOKIE_STORE, this.cookieStore);
         HttpRequestBase httprequest = request.getHttpRequest();
-        httprequest.reset();
+        reset(httprequest);
         return new Response(this.httpclient.execute(httprequest, this.localContext));
     }
 

@@ -26,17 +26,6 @@
 
 package org.apache.http.client.fluent;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -44,7 +33,6 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
@@ -56,13 +44,28 @@ import org.apache.http.client.methods.HttpTrace;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import static org.apache.http.backport.Utils.HTTP_DEF_CONTENT_CHARSET;
+import static org.apache.http.backport.Utils.newByteArrayEntity;
+import static org.apache.http.backport.Utils.newFileEntity;
+import static org.apache.http.backport.Utils.newInputStreamEntity;
+import static org.apache.http.backport.Utils.newStringEntity;
+import static org.apache.http.backport.Utils.newUrlEncodedFormEntity;
 
 public class Request {
 
@@ -267,23 +270,23 @@ public class Request {
     }
 
     public Request bodyForm(final Iterable <? extends NameValuePair> formParams, final Charset charset) {
-        return body(new UrlEncodedFormEntity(formParams, charset));
+        return body(newUrlEncodedFormEntity(formParams, charset));
     }
 
     public Request bodyForm(final Iterable <? extends NameValuePair> formParams) {
-        return bodyForm(formParams, HTTP.DEF_CONTENT_CHARSET);
+        return bodyForm(formParams, HTTP_DEF_CONTENT_CHARSET);
     }
 
     public Request bodyForm(final NameValuePair... formParams) {
-        return bodyForm(Arrays.asList(formParams), HTTP.DEF_CONTENT_CHARSET);
+        return bodyForm(Arrays.asList(formParams), HTTP_DEF_CONTENT_CHARSET);
     }
 
     public Request bodyString(final String s, final ContentType contentType) {
-        return body(new StringEntity(s, contentType));
+        return body(newStringEntity(s, contentType));
     }
 
     public Request bodyFile(final File file, final ContentType contentType) {
-        return body(new FileEntity(file, contentType));
+        return body(newFileEntity(file, contentType));
     }
 
     public Request bodyByteArray(final byte[] b) {
@@ -291,7 +294,7 @@ public class Request {
     }
 
     public Request bodyByteArray(final byte[] b, int off, int len) {
-        return body(new ByteArrayEntity(b, off, len));
+        return body(newByteArrayEntity(b, off, len));
     }
 
     public Request bodyStream(final InputStream instream) {
@@ -299,7 +302,7 @@ public class Request {
     }
 
     public Request bodyStream(final InputStream instream, final ContentType contentType) {
-        return body(new InputStreamEntity(instream, -1, contentType));
+        return body(newInputStreamEntity(instream, -1, contentType));
     }
 
     @Override
