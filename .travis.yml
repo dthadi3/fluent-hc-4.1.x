@@ -5,7 +5,7 @@ arch:
 os: linux
 jdk: openjdk11
 before_install:
-  - sed -i '/maven.compile.target/ a <version>1.9</version>' pom.xml
-  - sed -i '/maven.compile.source/ a <version>1.9</version>' pom.xml
-  - sed -i '/source/ a <version>1.9</version>' pom.xml
-  - sed -i '/link/ a <version>1.9</version>' pom.xml
+  - sed -i '/maven.compile.target/ a <version>1.11</version>' pom.xml
+  - sed -i '/maven.compile.source/ a <version>1.11</version>' pom.xml
+  - sed -i '/source/ a <version>1.11</version>' pom.xml
+  - sed -i '/link/ a <version>1.11</version>' pom.xml
